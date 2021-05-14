@@ -1,0 +1,11 @@
+.git
+.vscode
+
+app
+proxy
+
+backend/.dart_tool
+backend/.packages
+
+common/.dart_tool
+common/.packages
