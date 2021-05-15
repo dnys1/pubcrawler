@@ -9,5 +9,6 @@ deploy:
 .PHONY: publish
 publish:
 	cd app && \
-	flutter pub global run peanut && \
+	flutter pub global run peanut \
+		--post-build-dart-script=tool/add_cname.dart && \
 	git push origin --set-upstream gh-pages
