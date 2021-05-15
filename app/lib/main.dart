@@ -1,4 +1,5 @@
 import 'package:common/common.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:pubcrawler/service/pub_service.dart';
 import 'package:pubcrawler/ui/package_card_view.dart';
@@ -31,6 +32,8 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final _pubService = PubService();
+  final _analytics = FirebaseAnalytics();
+
   Package _loadedPackage;
   bool _isLoading = true;
 
@@ -100,7 +103,12 @@ class _HomeViewState extends State<HomeView> {
                 padding: const EdgeInsets.only(bottom: 20.0),
                 child: ElevatedButton(
                   child: const Icon(Icons.refresh),
-                  onPressed: _isLoading ? null : _loadNewPackage,
+                  onPressed: _isLoading
+                      ? null
+                      : () {
+                          _analytics.logEvent(name: 'load_package');
+                          _loadNewPackage();
+                        },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(20),
                     shape: const CircleBorder(),
