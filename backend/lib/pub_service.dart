@@ -15,6 +15,7 @@ class PubService {
   List<String> _packageCache;
 
   final _client = http.Client();
+  final _random = Random();
 
   Future<List<String>> _listPackages() async {
     if (_packageCache != null) {
@@ -28,19 +29,24 @@ class PubService {
   Future<Package> getRandomPackage() async {
     // Get package info
     final packages = await _listPackages();
-    final packageName = packages[Random().nextInt(packages.length)];
-    final packageUrl = packageInfoEndpoint(packageName);
-    final packageResponse = await _client.get(packageUrl);
-    if (packageResponse.statusCode != 200) {
-      throw ApiException.get(
-        url: packageUrl,
-        statusCode: packageResponse.statusCode,
-        body: packageResponse.body,
+    PackageData package;
+    do {
+      final packageName = packages[_random.nextInt(packages.length)];
+      final packageUrl = packageInfoEndpoint(packageName);
+      final packageResponse = await _client.get(packageUrl);
+      if (packageResponse.statusCode != 200) {
+        throw ApiException.get(
+          url: packageUrl,
+          statusCode: packageResponse.statusCode,
+          body: packageResponse.body,
+        );
+      }
+      package = PackageData.fromJson(
+        jsonDecode(packageResponse.body) as Map<String, dynamic>,
       );
-    }
-    final package = PackageData.fromJson(
-      jsonDecode(packageResponse.body) as Map<String, dynamic>,
-    );
+    } while (package.isDiscontinued ?? false);
+
+    final packageName = package.name;
 
     // Get score data and metrics
     final metricsUrl = packageMetricsEndpoint(packageName);

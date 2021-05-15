@@ -21,7 +21,7 @@ Future<void> main(List<String> args) async {
 }
 
 const _functionTargets = <FunctionTarget>{
-  FunctionTarget.http(
+  FunctionTarget.httpWithLogger(
     'random',
     function_library.random,
   ),

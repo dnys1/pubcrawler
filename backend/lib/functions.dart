@@ -12,7 +12,7 @@ const corsHeaders = {
 };
 
 @CloudFunction()
-Future<Response> random(Request request) async {
+Future<Response> random(Request request, RequestLogger logger) async {
   try {
     final randomPackage = await _pubService.getRandomPackage();
     return Response.ok(
@@ -23,8 +23,10 @@ Future<Response> random(Request request) async {
       },
     );
   } on ApiException catch (e) {
+    logger.error(e.toString());
     return Response(e.statusCode, body: e.body, headers: corsHeaders);
   } catch (e) {
+    logger.critical(e.toString());
     return Response.internalServerError(
       body: e.toString(),
       headers: corsHeaders,
