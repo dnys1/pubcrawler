@@ -25,13 +25,37 @@
 
   <title>PubCrawler</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyCVaP8u7RgwXUGPnX1z3N01F-PKfX28YVs",
+      authDomain: "pubcrawler-11f6c.firebaseapp.com",
+      projectId: "pubcrawler-11f6c",
+      storageBucket: "pubcrawler-11f6c.appspot.com",
+      messagingSenderId: "434180769857",
+      appId: "1:434180769857:web:b1b4e38fb536930bc6dec0",
+      measurementId: "G-5C1ZYG6H69"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
 </head>
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
   <script>
-    var serviceWorkerVersion = '468192001';
+    var serviceWorkerVersion = '3683041784';
     var scriptLoaded = false;
     function loadMainDartJs() {
       if (scriptLoaded) {
