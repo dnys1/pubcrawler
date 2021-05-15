@@ -10,5 +10,6 @@ deploy:
 publish:
 	cd app && \
 	flutter pub global run peanut \
-		--post-build-dart-script=tool/add_cname.dart && \
+		--post-build-dart-script=tool/add_cname.dart \
+		--web-renderer=canvaskit && \
 	git push origin --set-upstream gh-pages
